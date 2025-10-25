@@ -156,6 +156,7 @@ const styles = StyleSheet.create({
     selectSeatsButton: {
         backgroundColor: colors.primary,
         width: wp('92%'),
-        alignSelf: 'center'
+        alignSelf: 'center',
+        marginBottom: hp(2)
     }
 })

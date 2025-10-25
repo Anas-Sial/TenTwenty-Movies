@@ -70,8 +70,8 @@ const WatchMovie: React.FC = () => {
             <WatchHeader
                 title={genreName ? genreName : "Watch"} />
 
-            <View style={styles.container}>
-                {isLoading && page === 1 ? <LoadingIndicator /> : (
+            {isLoading && page === 1 ? <LoadingIndicator /> : (
+                <View style={styles.container}>
                     <FlatList
                         data={allMovies}
                         renderItem={renderMovieItem}
@@ -84,8 +84,8 @@ const WatchMovie: React.FC = () => {
                             isLoading && page > 1 ? <LoadingIndicator /> : null
                         )}
                     />
-                )}
-            </View>
+                </View>
+            )}
 
         </ScreenWrapper>
     )

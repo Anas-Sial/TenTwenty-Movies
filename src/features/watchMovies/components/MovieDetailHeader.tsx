@@ -6,6 +6,7 @@ import { colors, hp, spacing } from '@/styles'
 import { LeftWhiteIcon } from '@/assets/svg'
 import { Variant } from '@/types'
 import commonStyles from '@/styles/commonStyles'
+import { isIOS } from '@/utils/helper'
 
 const MovieDetailHeader: React.FC = () => {
     const navigation = useNavigation()
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         zIndex: 10,
-        paddingTop: hp(4),
+        paddingTop: isIOS ? hp(4) : hp(0),
     },
     header: {
         ...commonStyles.flexRow,

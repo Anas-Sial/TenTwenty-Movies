@@ -2,7 +2,7 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { AppText, SvgElements } from '@/components/common'
-import { colors, hp, spacing } from '@/styles'
+import { colors, hp, spacing, wp } from '@/styles'
 import { LeftArrowIcon } from '@/assets/svg'
 import { Variant } from '@/types'
 import { SeatSelectionHeaderProps } from '../types'
@@ -33,6 +33,7 @@ const SeatSelectionHeader: React.FC<SeatSelectionHeaderProps> = ({
                         {showtime} | {hall}
                     </AppText>
                 </View>
+                <View style={{ width: wp(10) }} />
             </View>
         </View>
     )

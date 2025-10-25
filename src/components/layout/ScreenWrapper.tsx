@@ -8,7 +8,7 @@ const ScreenWrapper: React.FC<ScreenWrapperProps> = ({
   children,
   backgroundColor = colors.background,
   style = {},
-  statusBarColor = "dark-content",
+  statusBarColor = "light-content",
   withoutStatusBar = false,
 }) => {
   const Wrapper = withoutStatusBar ? View : SafeAreaView

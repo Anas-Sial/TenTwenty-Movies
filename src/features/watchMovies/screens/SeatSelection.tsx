@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { RouteProp } from '@react-navigation/native'
+import { RouteProp, useNavigation } from '@react-navigation/native'
 import ScreenWrapper from '@/components/layout/ScreenWrapper'
 import { SeatSelectionHeader, SeatMap, SeatLegend, SeatSelectionFooter } from '../components'
 import { StackParamList } from '@/types'
@@ -14,7 +14,8 @@ interface SeatSelectionProps {
 }
 
 const SeatSelection: React.FC<SeatSelectionProps> = ({ route }) => {
-    const { movie, showtime, hall } = route.params
+    const navigation = useNavigation()
+    const { movie, showtime, hall } = route?.params || {}
     const [selectedSeats, setSelectedSeats] = useState<SeatProps[]>([])
 
     const handleSeatSelect = (seat: SeatProps) => {
@@ -33,7 +34,7 @@ const SeatSelection: React.FC<SeatSelectionProps> = ({ route }) => {
     }
 
     const handleProceedToPay = () => {
-        console.log('payment :::: ', selectedSeats)
+        navigation.goBack()
     }
 
     return (

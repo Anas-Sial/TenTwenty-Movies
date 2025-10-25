@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, StyleSheet, TouchableOpacity, Keyboard } from 'react-native'
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs'
 import { colors, fonts, hp, spacing } from '@/styles'
 import { AppText } from '../common'
@@ -8,6 +8,26 @@ import commonStyle from '@/styles/commonStyles'
 import { Variant } from '@/types'
 
 const CustomTabBar: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation }) => {
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false)
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setIsKeyboardVisible(true)
+    })
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setIsKeyboardVisible(false)
+    })
+
+    return () => {
+      keyboardDidShowListener?.remove()
+      keyboardDidHideListener?.remove()
+    }
+  }, [])
+
+  if (isKeyboardVisible) {
+    return null
+  }
+
   return (
     <View style={styles.container}>
       {state.routes.map((route, index) => {

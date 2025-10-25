@@ -6,14 +6,9 @@ import { Variant } from '@/types'
 import commonStyles from '@/styles/commonStyles'
 import { IMAGES } from '@/assets/images'
 import { MinusIcon, PlusIcon } from '@/assets/svg'
-import { SeatProps } from '../types'
+import { SeatMapProps, SeatProps } from '../types'
 import { seatLayout, unavailableSeats } from '../data/ShowTimeData'
 import { getSeatColor } from '@/utils/helper'
-
-interface SeatMapProps {
-    onSeatSelect: (seat: SeatProps) => void
-    selectedSeats: SeatProps[]
-}
 
 const SeatMap: React.FC<SeatMapProps> = ({ onSeatSelect, selectedSeats }) => {
     const [zoomLevel, setZoomLevel] = useState(1)

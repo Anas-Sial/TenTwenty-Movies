@@ -1,48 +1,29 @@
 import React from 'react'
-import { StyleSheet, View, TouchableOpacity, Image, ImageBackground } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, ImageBackground } from 'react-native'
 import { AppText } from '@/components/common'
 import { colors, spacing, hp, wp } from '@/styles'
 import { Variant } from '@/types'
 import commonStyles from '@/styles/commonStyles'
-import { Showtime } from '../types'
+import { ShowtimeCardProps } from '../types'
 import { IMAGES } from '@/assets/images'
-
-interface ShowtimeCardProps {
-    showtime: Showtime
-    isSelected: boolean
-    onSelect: (showtime: Showtime) => void
-}
+import { seatLayout, unavailableSeats } from '../data/ShowTimeData'
 
 const ShowtimeCard: React.FC<ShowtimeCardProps> = ({ showtime, isSelected, onSelect }) => {
     const renderSeatMapPreview = () => {
-        // Use the exact same seat layout as SeatMap
-        const seatLayout = [
-            { row: 1, seats: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18] }, // 18 seats
-            { row: 2, seats: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22] }, // 22 seats
-            { row: 3, seats: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22] }, // 22 seats
-            { row: 4, seats: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22] }, // 22 seats
-            { row: 5, seats: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24] }, // 24 seats
-            { row: 6, seats: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24] }, // 24 seats
-        ]
-
-        // Use the same unavailable seats as SeatMap
-        const unavailableSeats = ['1-5', '2-8', '3-11', '4-2', '5-14', '6-6']
 
         const renderSeatGroup = (rowSeats: { id: string; color: string }[], groupIndex: number) => {
             const totalSeats = rowSeats.length
             let groups = []
 
             if (totalSeats >= 18) {
-                // For rows with 18+ seats: left, 14 center, right
                 const leftCount = Math.floor((totalSeats - 14) / 2)
 
                 groups = [
-                    rowSeats.slice(0, leftCount),                    // Left section
-                    rowSeats.slice(leftCount, leftCount + 14),       // Center section (14 seats)
-                    rowSeats.slice(leftCount + 14, totalSeats)      // Right section
+                    rowSeats.slice(0, leftCount),
+                    rowSeats.slice(leftCount, leftCount + 14),
+                    rowSeats.slice(leftCount + 14, totalSeats)
                 ]
             } else {
-                // For rows with less than 18 seats: distribute evenly
                 const groupSize = Math.ceil(totalSeats / 3)
                 groups = [
                     rowSeats.slice(0, groupSize),

@@ -13,13 +13,13 @@ const SeatSelectionFooter: React.FC<SeatSelectionFooterProps> = ({
     onRemoveSeat,
     onProceedToPay
 }) => {
-    const totalPrice = selectedSeats.reduce((sum, seat) => sum + seat.price, 0)
+    const totalPrice = selectedSeats?.reduce((sum, seat) => sum + seat.price, 0)
 
     const renderSelectedSeat = (seat: SeatProps) => (
         <View key={seat.id} style={styles.selectedSeatItem}>
             <AppText variant={Variant.caption}>
                 <AppText variant={Variant.bodySemiBold}>{seat.number} / </AppText>
-                {seat.row} row
+                {seat?.row} row
             </AppText>
             <TouchableOpacity onPress={() => onRemoveSeat(seat.id)}>
                 <SvgElements name={CloseIcon} height={wp(4.5)} />

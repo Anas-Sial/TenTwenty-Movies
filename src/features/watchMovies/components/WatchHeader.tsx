@@ -49,4 +49,3 @@ const styles = StyleSheet.create({
         paddingHorizontal: spacing.md,
     }
 })
-

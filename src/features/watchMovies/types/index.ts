@@ -127,3 +127,14 @@ export interface Showtime {
     availableSeats: number
     totalSeats: number
 }
+
+export interface SeatMapProps {
+    onSeatSelect: (seat: SeatProps) => void
+    selectedSeats: SeatProps[]
+}
+
+export interface ShowtimeCardProps {
+    showtime: Showtime
+    isSelected: boolean
+    onSelect: (showtime: Showtime) => void
+}

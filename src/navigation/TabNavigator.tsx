@@ -11,6 +11,7 @@ const TabNavigator: React.FC = () => {
     return (
         <Tab.Navigator
             initialRouteName="Watch"
+            
             tabBar={(props) => <CustomTabBar {...props} />}
             screenOptions={{
                 headerShown: false,

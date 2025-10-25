@@ -11,7 +11,6 @@ const WatchStack = () => {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name={SCREENS.WATCH} component={WatchMovie} />
             <Stack.Screen name={SCREENS.MOVIE_GENER} component={MovieGener} />
-            <Stack.Screen name={SCREENS.MOVIE_DETAIL} component={MovieDetail} />
         </Stack.Navigator>
     )
 }
