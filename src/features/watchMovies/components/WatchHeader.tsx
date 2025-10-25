@@ -11,13 +11,17 @@ import { SCREENS } from '@/constants/screens'
 
 type WatchHeaderNavigationProp = StackNavigationProp<StackMovieParamList>
 
-const WatchHeader: React.FC = () => {
+interface WatchHeaderProps {
+    title?: string
+}
+
+const WatchHeader: React.FC<WatchHeaderProps> = ({ title = "Watch" }) => {
     const navigation = useNavigation<WatchHeaderNavigationProp>()
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <AppText variant={Variant.subTitle}>
-                    Watch
+                    {title}
                 </AppText>
                 <SvgElements
                     name={SearchIcon}

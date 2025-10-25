@@ -3,12 +3,7 @@ import { StyleSheet, ScrollView } from 'react-native'
 import { RouteProp, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import ScreenWrapper from '@/components/layout/ScreenWrapper'
-import { 
-    MovieDetailHeader, 
-    MovieDetailBanner, 
-    GenreTags, 
-    MovieOverview 
-} from '../components'
+import { MovieDetailHeader, MovieDetailBanner, GenreTags, MovieOverview } from '../components'
 import { LoadingIndicator } from '@/components/common'
 import { useGetMovieDetailsQuery } from '../services/moviesApi'
 import { colors } from '@/styles'
@@ -25,29 +20,22 @@ interface MovieDetailProps {
 const MovieDetail: React.FC<MovieDetailProps> = ({ route }) => {
     const navigation = useNavigation<MovieDetailNavigationProp>()
     const { movie } = route.params
-    
-    const { data: movieDetails, isLoading, error } = useGetMovieDetailsQuery({ 
-        movieId: movie.id 
+
+    const { data: movieDetails, isLoading, error } = useGetMovieDetailsQuery({
+        movieId: movie.id
     })
 
     const handleGetTickets = () => {
-        // Mock showtime and hall data
-        const showtime = 'March 5, 2021 | 12:30'
-        const hall = 'Hall 1'
-        
-        navigation.navigate(SCREENS.SEAT_SELECTION, {
-            movie: detailedMovie,
-            showtime,
-            hall
+        navigation.navigate(SCREENS.SHOWTIME_SELECTION, {
+            movie: detailedMovie
         })
     }
 
     const handleWatchTrailer = () => {
-        console.log('celled')
         const trailerUrl = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
-        navigation.navigate(SCREENS.VIDEO_PLAYER, { 
-            videoUrl: trailerUrl, 
-            movieTitle: detailedMovie.title 
+        navigation.navigate(SCREENS.VIDEO_PLAYER, {
+            videoUrl: trailerUrl,
+            movieTitle: detailedMovie.title
         })
     }
 
@@ -66,12 +54,12 @@ const MovieDetail: React.FC<MovieDetailProps> = ({ route }) => {
     return (
         <ScreenWrapper withoutStatusBar={true}>
             <MovieDetailHeader />
-            <MovieDetailBanner 
+            <MovieDetailBanner
                 movie={detailedMovie}
                 onGetTickets={handleGetTickets}
                 onWatchTrailer={handleWatchTrailer}
             />
-            <ScrollView 
+            <ScrollView
                 style={styles.content}
                 showsVerticalScrollIndicator={false}
             >

@@ -29,6 +29,7 @@ export interface TMDBResponse {
 
 export interface MoviesRequestParams {
     page?: number;
+    limit?: number;
 }
 
 export interface SearchMoviesRequestParams {
@@ -74,6 +75,7 @@ export interface GenreCardProps {
 
 export interface SearchHeaderProps {
     onSearch?: (query: string) => void
+    onSubmitEditing?: (query: string) => void
 }
 
 export interface SearchResultItemProps {
@@ -114,4 +116,14 @@ export interface SeatSelectionFooterProps {
     selectedSeats: SeatProps[]
     onRemoveSeat: (seatId: string) => void
     onProceedToPay: () => void
+}
+
+export interface Showtime {
+    id: string
+    time: string
+    hall: string
+    price: number
+    bonus: number
+    availableSeats: number
+    totalSeats: number
 }

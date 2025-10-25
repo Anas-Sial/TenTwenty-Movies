@@ -2,7 +2,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { StackMovieParamList } from '@/types'
 import { SCREENS } from '@/constants/screens'
-import { MovieGener, WatchMovie } from '@/features/watchMovies/screens'
+import { MovieGener, WatchMovie, MovieDetail } from '@/features/watchMovies/screens'
 
 const Stack = createStackNavigator<StackMovieParamList>()
 
@@ -11,6 +11,7 @@ const WatchStack = () => {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name={SCREENS.WATCH} component={WatchMovie} />
             <Stack.Screen name={SCREENS.MOVIE_GENER} component={MovieGener} />
+            <Stack.Screen name={SCREENS.MOVIE_DETAIL} component={MovieDetail} />
         </Stack.Navigator>
     )
 }

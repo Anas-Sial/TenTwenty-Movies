@@ -35,12 +35,12 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         zIndex: 10,
-        paddingTop: hp(2),
+        paddingTop: hp(4),
     },
     header: {
         ...commonStyles.flexRow,
         paddingHorizontal: spacing.md,
-        paddingVertical: spacing.sm,
+        paddingVertical: spacing.md,
         gap: spacing.md,
     },
     backButton: {

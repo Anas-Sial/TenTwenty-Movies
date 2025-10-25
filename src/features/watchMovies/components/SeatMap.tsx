@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { View, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native'
 import { AppText, SvgElements } from '@/components/common'
-import { colors, hp, spacing } from '@/styles'
+import { colors, hp, spacing, wp } from '@/styles'
 import { Variant } from '@/types'
 import commonStyles from '@/styles/commonStyles'
 import { IMAGES } from '@/assets/images'
 import { MinusIcon, PlusIcon } from '@/assets/svg'
 import { SeatProps } from '../types'
-
+import { seatLayout, unavailableSeats } from '../data/ShowTimeData'
+import { getSeatColor } from '@/utils/helper'
 
 interface SeatMapProps {
     onSeatSelect: (seat: SeatProps) => void
@@ -19,20 +20,6 @@ const SeatMap: React.FC<SeatMapProps> = ({ onSeatSelect, selectedSeats }) => {
 
     const [seats] = useState<SeatProps[]>(() => {
         const seatData: SeatProps[] = []
-
-        // Define seat layout with aisles/gaps as per image
-        const seatLayout = [
-            { row: 1, seats: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18] }, // 18 seats
-            { row: 2, seats: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22] }, // 22 seats
-            { row: 3, seats: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22] }, // 22 seats
-            { row: 4, seats: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22] }, // 22 seats
-            { row: 5, seats: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24] }, // 24 seats
-            { row: 6, seats: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24] }, // 24 seats
-            { row: 7, seats: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24] }, // 24 seats
-            { row: 8, seats: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24] }, // 24 seats
-            { row: 9, seats: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24] }, // 24 seats
-            { row: 10, seats: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24] }, // 24 seats (VIP)
-        ]
 
         seatLayout.forEach(({ row, seats: seatNumbers }) => {
             seatNumbers.forEach(num => {
@@ -47,8 +34,6 @@ const SeatMap: React.FC<SeatMapProps> = ({ onSeatSelect, selectedSeats }) => {
             })
         })
 
-        // Mark some seats as unavailable to match the image
-        const unavailableSeats = ['1-5', '2-8', '3-11', '4-2', '5-14', '6-6', '7-9', '8-3', '9-12', '10-5']
         return seatData.map(seat => ({
             ...seat,
             type: unavailableSeats.includes(seat.id) ? 'unavailable' : seat.type
@@ -63,46 +48,61 @@ const SeatMap: React.FC<SeatMapProps> = ({ onSeatSelect, selectedSeats }) => {
         setZoomLevel(prev => Math.max(prev - 0.2, 0.5))
     }
 
-    const getSeatStyle = (seat: SeatProps) => {
+    const renderSeat = (seat: SeatProps) => {
         const isSelected = selectedSeats.some(s => s.id === seat.id)
         const seatSize = 16 * zoomLevel
 
-        const baseStyle = {
-            width: seatSize,
-            height: seatSize,
-            borderRadius: 3,
-            marginHorizontal: 1,
-        }
 
-        if (isSelected) {
-            return [baseStyle, styles.selectedSeat]
-        }
-
-        switch (seat.type) {
-            case 'vip':
-                return [baseStyle, styles.vipSeat]
-            case 'unavailable':
-                return [baseStyle, styles.unavailableSeat]
-            default:
-                return [baseStyle, styles.regularSeat]
-        }
+        return (
+            <TouchableOpacity
+                key={seat.id}
+                style={styles.seatContainer}
+                onPress={() => seat.type !== 'unavailable' && onSeatSelect(seat)}
+                disabled={seat.type === 'unavailable'}>
+                <View
+                    style={[
+                        styles.seatShape,
+                        {
+                            width: seatSize,
+                            height: seatSize * 1,
+                            backgroundColor: getSeatColor(seat.type, isSelected)
+                        }
+                    ]}
+                />
+                <View
+                    style={[
+                        styles.seatBack,
+                        {
+                            width: seatSize * 0.8,
+                            height: seatSize * 0.2,
+                            backgroundColor: getSeatColor(seat.type, isSelected)
+                        }
+                    ]}
+                />
+            </TouchableOpacity>
+        )
     }
 
-    const renderSeat = (seat: SeatProps) => (
-        <TouchableOpacity
-            key={seat.id}
-            style={getSeatStyle(seat)}
-            onPress={() => seat.type !== 'unavailable' && onSeatSelect(seat)}
-            disabled={seat.type === 'unavailable'}
-        />
-    )
-
     const renderSeatGroup = (rowSeats: SeatProps[], groupIndex: number) => {
-        const groupSize = rowSeats.length <= 18 ? 6 : 8
-        const groups = []
+        const totalSeats = rowSeats.length
+        let groups = []
 
-        for (let i = 0; i < rowSeats.length; i += groupSize) {
-            groups.push(rowSeats.slice(i, i + groupSize))
+        if (totalSeats >= 18) {
+            const leftCount = Math.floor((totalSeats - 14) / 2)
+            const rightCount = totalSeats - leftCount - 14
+
+            groups = [
+                rowSeats.slice(0, leftCount),  
+                rowSeats.slice(leftCount, leftCount + 14),   
+                rowSeats.slice(leftCount + 14, totalSeats)  
+            ]
+        } else {
+            const groupSize = Math.ceil(totalSeats / 3)
+            groups = [
+                rowSeats.slice(0, groupSize),
+                rowSeats.slice(groupSize, groupSize * 2),
+                rowSeats.slice(groupSize * 2, totalSeats)
+            ]
         }
 
         return groups.map((group, index) => (
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     },
     seatMap: {
         paddingLeft: spacing.lg,
-      ...commonStyles.center,
+        ...commonStyles.center,
         width: '100%',
     },
     row: {
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     },
 
     rowNumber: {
-        width: 30,
+        width: wp(5),
         alignItems: 'flex-start',
         justifyContent: 'center',
         marginRight: spacing.sm,
@@ -221,20 +221,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     aisle: {
-        width: 8,
-        height: 1,
+        width: spacing.md,
+        height: 20,
+        backgroundColor: 'transparent',
     },
-    regularSeat: {
-        backgroundColor: colors.primary,
+    seatContainer: {
+        alignItems: 'center',
+        marginHorizontal: 1,
     },
-    vipSeat: {
-        backgroundColor: colors.purple,
+    seatShape: {
+        borderRadius: 3,
+
     },
-    unavailableSeat: {
-        backgroundColor: colors.lightGray,
-    },
-    selectedSeat: {
-        backgroundColor: colors.yellow,
+    seatBack: {
+        borderRadius: 2,
+        marginTop: 1,
     },
     zoomControls: {
         position: 'absolute',
@@ -250,6 +251,6 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
         borderWidth: 1,
         borderColor: colors.lightGray,
-       ...commonStyles.center,
+        ...commonStyles.center,
     },
 })

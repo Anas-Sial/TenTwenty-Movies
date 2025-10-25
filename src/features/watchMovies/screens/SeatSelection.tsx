@@ -33,7 +33,7 @@ const SeatSelection: React.FC<SeatSelectionProps> = ({ route }) => {
     }
 
     const handleProceedToPay = () => {
-        console.log('Proceeding to payment with seats:', selectedSeats)
+        console.log('payment :::: ', selectedSeats)
     }
 
     return (

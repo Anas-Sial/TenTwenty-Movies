@@ -5,8 +5,9 @@ import { colors, getFontSize, hp, spacing } from '@/styles'
 import { SearchIcon, CloseIcon } from '@/assets/svg'
 import commonStyles from '@/styles/commonStyles'
 import { SearchHeaderProps } from '../types'
+import { isIOS } from '@/utils/helper'
 
-const SearchHeader: React.FC<SearchHeaderProps> = ({ onSearch }) => {
+const SearchHeader: React.FC<SearchHeaderProps> = ({ onSearch, onSubmitEditing }) => {
     const [searchText, setSearchText] = useState('')
 
     const clearSearch = () => {
@@ -21,7 +22,7 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({ onSearch }) => {
 
     const handleSearch = () => {
         if (searchText.trim()) {
-            onSearch?.(searchText.trim())
+            onSubmitEditing?.(searchText.trim())
         }
     }
 
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.background,
         borderRadius: hp(1.2),
         paddingHorizontal: spacing.md,
-        paddingVertical: spacing.sm,
+        paddingVertical:  isIOS ? spacing.md : spacing.sm,
         gap: spacing.sm,
     },
     searchInput: {

@@ -9,25 +9,18 @@ import { Variant } from '@/types'
 import AppButton from '@/components/common/AppButton'
 import { PlayIcon } from '@/assets/svg'
 import commonStyles from '@/styles/commonStyles'
+import { formatReleaseDate } from '../utils/helper'
 
 const MovieDetailBanner: React.FC<MovieDetailBannerProps> = ({
     movie,
     onGetTickets,
     onWatchTrailer
 }) => {
-    const formatReleaseDate = (dateString: string) => {
-        const date = new Date(dateString)
-        return `In Theaters ${date.toLocaleDateString('en-US', {
-            month: 'long',
-            day: 'numeric',
-            year: 'numeric'
-        })}`
-    }
 
     return (
         <View style={styles.container}>
             <Image
-                source={{ uri: `${APP_CONFIG.Image_Url}${movie.backdrop_path}` }}
+                source={{ uri: `${APP_CONFIG?.Image_Url}${movie?.backdrop_path}` }}
                 style={styles.backgroundImage}
                 resizeMode="cover"
             />
@@ -80,16 +73,17 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-        padding: spacing.lg,
     },
     content: {
         alignItems: 'center',
+        paddingBottom: hp(2)
     },
     title: {
         textAlign: 'center',
         marginBottom: spacing.sm,
         color: colors.white,
-        fontFamily: fonts.medium
+        fontFamily: fonts.medium,
+        maxWidth: '90%'
     },
     releaseDate: {
         textAlign: 'center',

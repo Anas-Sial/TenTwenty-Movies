@@ -11,3 +11,4 @@ export { default as SeatSelectionHeader } from './SeatSelectionHeader';
 export { default as SeatMap } from './SeatMap';
 export { default as SeatLegend } from './SeatLegend';
 export { default as SeatSelectionFooter } from './SeatSelectionFooter';
+export { default as ShowtimeCard } from './ShowtimeCard';

@@ -1,8 +1,8 @@
 import React from 'react'
-import { StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Image, TouchableOpacity, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { AppText } from '@/components/common'
-import { colors, hp, spacing } from '@/styles'
+import { colors, hp, spacing, wp } from '@/styles'
 import { MovieItemProps } from '../types'
 import { APP_CONFIG } from '@/constants/config'
 import { truncateText } from '@/utils/helper'
@@ -25,9 +25,11 @@ const MovieItem: React.FC<MovieItemProps> = ({ movie, onPress }) => {
         locations={[0, 1]}
         style={styles.overlay}
       >
-        <AppText variant={Variant.largeSemiBold} color={colors.white}>
-          {truncateText(movie?.title, 70)}
-        </AppText>
+        <View style={styles.titleContainer}>
+          <AppText variant={Variant.largeSemiBold} color={colors.white}>
+            {truncateText(movie?.title, 70)}
+          </AppText>
+        </View>
       </LinearGradient>
     </TouchableOpacity>
   )
@@ -46,13 +48,16 @@ const styles = StyleSheet.create({
     width: '100%',
     height: hp(22),
   },
+  titleContainer: {
+    flex: 1,
+    padding: spacing.sm,
+    paddingVertical: hp(1.8),
+  },
   overlay: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    padding: spacing.sm,
-    paddingVertical: hp(1.6),
     justifyContent: 'flex-end',
   }
 })

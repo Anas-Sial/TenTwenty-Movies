@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: colors.white,
         paddingHorizontal: spacing.md,
+        paddingBottom: spacing.md,
     },
     selectedSeatsContainer: {
         flexDirection: 'row',

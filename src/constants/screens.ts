@@ -4,5 +4,6 @@ export const SCREENS = {
     MOVIE_GENER: 'MovieGener',
     MOVIE_DETAIL: 'MovieDetail',
     VIDEO_PLAYER: 'VideoPlayer',
+    SHOWTIME_SELECTION: 'ShowtimeSelection',
     SEAT_SELECTION: 'SeatSelection',
 } as const
