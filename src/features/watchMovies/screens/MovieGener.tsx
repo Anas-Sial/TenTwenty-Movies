@@ -168,7 +168,7 @@ export default MovieGener
 
 const styles = StyleSheet.create({
     container: {
-        paddingBottom: wp(7)
+        paddingBottom: wp(15)
     },
     listContainer: {
         paddingBottom: spacing.xl,
